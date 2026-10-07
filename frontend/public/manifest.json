@@ -1,0 +1,16 @@
+{
+  "short_name": "Sanjeevani PWA",
+  "name": "Autonomous Rural Preventive Healthcare Platform",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#F8FAFC",
+  "theme_color": "#0F766E",
+  "display": "standalone",
+  "orientation": "portrait"
+}

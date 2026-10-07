@@ -1,0 +1,39 @@
+# Node dependencies and build
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python cache and environments
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Pytest and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local databases and logs
+*.db
+*.sqlite3
+*.log
+
+# Editor and OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

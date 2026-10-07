@@ -1,0 +1,227 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -------------------------------------------------------------------------- */
+/* THEME DEFINITIONS & CSS COLOR PALETTES                                     */
+/* -------------------------------------------------------------------------- */
+
+/* 1. Default: Clinical Clean (Modern Light Healthcare Theme) */
+:root,
+[data-theme="clinical-light"] {
+  --color-slate-50: 15 23 42;
+  --color-slate-100: 15 23 42;       /* Main text: #0f172a */
+  --color-slate-200: 30 41 59;       /* Secondary text: #1e293b */
+  --color-slate-300: 51 65 85;       /* Muted text: #334155 */
+  --color-slate-400: 100 116 139;    /* Placeholder / subtle: #64748b */
+  --color-slate-500: 148 163 184;    /* Tertiary: #94a3b8 */
+  --color-slate-600: 203 213 225;    /* Strong border: #cbd5e1 */
+  --color-slate-700: 226 232 240;    /* Border: #e2e8f0 */
+  --color-slate-750: 241 245 249;    /* Card hover: #f1f5f9 */
+  --color-slate-800: 241 245 249;    /* Subcard / button bg: #f1f5f9 */
+  --color-slate-850: 248 250 252;    /* Surface neutral: #f8fafc */
+  --color-slate-900: 255 255 255;    /* Card background: #ffffff */
+  --color-slate-950: 248 250 252;    /* App page background: #f8fafc */
+}
+
+/* 2. Ocean Medical (Hospital Royal Blue & Cyan Theme) */
+[data-theme="ocean-blue"] {
+  --color-slate-50: 15 23 42;
+  --color-slate-100: 15 23 42;
+  --color-slate-200: 30 41 59;
+  --color-slate-300: 51 65 85;
+  --color-slate-400: 96 122 158;
+  --color-slate-500: 147 169 198;
+  --color-slate-600: 191 210 236;
+  --color-slate-700: 219 234 254;    /* Subtle blue border: #dbeafe */
+  --color-slate-750: 239 246 255;
+  --color-slate-800: 239 246 255;    /* Ice blue button/chip: #eff6ff */
+  --color-slate-850: 240 249 255;
+  --color-slate-900: 255 255 255;    /* Card background: #ffffff */
+  --color-slate-950: 240 247 255;    /* Soft medical blue tint: #f0f7ff */
+}
+
+/* 3. Emerald Care (Mint Health & Ayurvedic Care Green Theme) */
+[data-theme="emerald-health"] {
+  --color-slate-50: 6 36 24;
+  --color-slate-100: 6 78 59;        /* Deep pine text: #064e3b */
+  --color-slate-200: 4 120 87;
+  --color-slate-300: 52 75 66;
+  --color-slate-400: 82 110 98;
+  --color-slate-500: 130 160 148;
+  --color-slate-600: 187 215 201;
+  --color-slate-700: 209 231 221;    /* Mint border: #d1e7dd */
+  --color-slate-750: 236 247 241;
+  --color-slate-800: 236 247 241;    /* Pale mint card bg: #ecf7f1 */
+  --color-slate-850: 244 251 247;
+  --color-slate-900: 255 255 255;    /* Card background: #ffffff */
+  --color-slate-950: 242 249 245;    /* Fresh mint tint background: #f2f9f5 */
+}
+
+/* 4. Midnight Dark (Original High-Tech Dark Station) */
+[data-theme="midnight-dark"] {
+  --color-slate-50: 248 250 252;
+  --color-slate-100: 241 245 249;
+  --color-slate-200: 226 232 240;
+  --color-slate-300: 203 213 225;
+  --color-slate-400: 148 163 184;
+  --color-slate-500: 100 116 139;
+  --color-slate-600: 71 85 105;
+  --color-slate-700: 51 65 85;
+  --color-slate-750: 30 41 59;
+  --color-slate-800: 30 41 59;
+  --color-slate-850: 15 23 42;
+  --color-slate-900: 15 23 42;
+  --color-slate-950: 2 6 23;
+}
+
+@layer base {
+  body {
+    background-color: rgb(var(--color-slate-950));
+    color: rgb(var(--color-slate-100));
+    antialiased: true;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* THEME-SPECIFIC REFINEMENTS                                                 */
+/* -------------------------------------------------------------------------- */
+
+/* Light Theme Card Shadows & High-Definition Styling */
+[data-theme="clinical-light"] .shadow-2xl,
+[data-theme="ocean-blue"] .shadow-2xl,
+[data-theme="emerald-health"] .shadow-2xl {
+  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04) !important;
+}
+
+[data-theme="clinical-light"] .shadow-lg,
+[data-theme="ocean-blue"] .shadow-lg,
+[data-theme="emerald-health"] .shadow-lg {
+  box-shadow: 0 6px 18px -3px rgba(15, 23, 42, 0.06), 0 2px 6px -2px rgba(15, 23, 42, 0.03) !important;
+}
+
+/* Light Theme Badges and Accent Pills */
+[data-theme="clinical-light"] .bg-teal-950,
+[data-theme="ocean-blue"] .bg-teal-950,
+[data-theme="emerald-health"] .bg-teal-950 {
+  background-color: #ccfbf1 !important;
+  color: #0f766e !important;
+  border-color: #99f6e4 !important;
+}
+
+[data-theme="clinical-light"] .bg-emerald-950,
+[data-theme="ocean-blue"] .bg-emerald-950,
+[data-theme="emerald-health"] .bg-emerald-950 {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+  border-color: #a7f3d0 !important;
+}
+
+[data-theme="clinical-light"] .bg-rose-950,
+[data-theme="ocean-blue"] .bg-rose-950,
+[data-theme="emerald-health"] .bg-rose-950 {
+  background-color: #ffe4e6 !important;
+  color: #be123c !important;
+  border-color: #fecdd3 !important;
+}
+
+[data-theme="clinical-light"] .bg-amber-950,
+[data-theme="ocean-blue"] .bg-amber-950,
+[data-theme="emerald-health"] .bg-amber-950 {
+  background-color: #fef3c7 !important;
+  color: #92400e !important;
+  border-color: #fde68a !important;
+}
+
+[data-theme="clinical-light"] .bg-blue-950,
+[data-theme="ocean-blue"] .bg-blue-950,
+[data-theme="emerald-health"] .bg-blue-950 {
+  background-color: #dbeafe !important;
+  color: #1d4ed8 !important;
+  border-color: #bfdbfe !important;
+}
+
+/* Light Theme Modal Backdrop */
+[data-theme="clinical-light"] .bg-black\/80,
+[data-theme="ocean-blue"] .bg-black\/80,
+[data-theme="emerald-health"] .bg-black\/80 {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+}
+
+/* Light Theme Form Controls */
+[data-theme="clinical-light"] input,
+[data-theme="clinical-light"] select,
+[data-theme="clinical-light"] textarea,
+[data-theme="ocean-blue"] input,
+[data-theme="ocean-blue"] select,
+[data-theme="ocean-blue"] textarea,
+[data-theme="emerald-health"] input,
+[data-theme="emerald-health"] select,
+[data-theme="emerald-health"] textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="clinical-light"] option,
+[data-theme="ocean-blue"] option,
+[data-theme="emerald-health"] option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+/* Brand Title Gradient Adjustments */
+.brand-title-gradient {
+  background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+[data-theme="midnight-dark"] .brand-title-gradient {
+  background: linear-gradient(135deg, #5eead4 0%, #6ee7b7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Digital 7-segment LCD monitor glow effect */
+.font-lcd {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* Emergency Red Flashing Siren */
+@keyframes emergency-pulse {
+  0%, 100% {
+    background-color: rgba(220, 38, 38, 0.95);
+    box-shadow: 0 0 30px rgba(220, 38, 38, 0.8);
+  }
+  50% {
+    background-color: rgba(153, 27, 27, 0.8);
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.4);
+  }
+}
+
+.animate-siren {
+  animation: emergency-pulse 1s infinite ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

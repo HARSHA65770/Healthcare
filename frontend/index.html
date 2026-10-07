@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#0F766E" />
+    <meta name="description" content="Autonomous Rural Preventive Healthcare Platform - Client-Side Web PWA with Browser WASM-OCR, Vernacular Voice AI & Real-time Hospital Telemetry" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>Sanjeevani AI - Rural Preventive Healthcare PWA</title>
+    <!-- Tesseract.js WASM for Edge OCR without image transmission -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-teal-500 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then(
+            reg => console.log('[PWA] Service Worker registered with scope: ', reg.scope),
+            err => console.log('[PWA] Service Worker registration failed: ', err)
+          );
+        });
+      }
+    </script>
+  </body>
+</html>
