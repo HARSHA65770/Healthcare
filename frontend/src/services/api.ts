@@ -42,7 +42,8 @@ export interface IngestionResult {
   offline_fallback_sms: string;
 }
 
-const API_BASE = '/api/v1';
+const RAW_API_URL = (import.meta.env.VITE_API_URL as string) || '';
+const API_BASE = RAW_API_URL ? `${RAW_API_URL.replace(/\/$/, '')}/api/v1` : '/api/v1';
 
 export async function ingestVitals(payload: VitalsIngestionPayload): Promise<IngestionResult> {
   const response = await fetch(`${API_BASE}/triage/ingest`, {
@@ -96,9 +97,15 @@ export function connectTelemetryWebSocket(
   onMessage: (data: any) => void,
   onStatusChange?: (connected: boolean) => void
 ): () => void {
-  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const host = window.location.host;
-  const wsUrl = `${protocol}//${host}/ws/telemetry?district=ALL`;
+  let wsUrl: string;
+  if (RAW_API_URL) {
+    const wsBase = RAW_API_URL.replace(/^http/, 'ws').replace(/\/$/, '');
+    wsUrl = `${wsBase}/ws/telemetry?district=ALL`;
+  } else {
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const host = window.location.host;
+    wsUrl = `${protocol}//${host}/ws/telemetry?district=ALL`;
+  }
 
   let ws: WebSocket | null = null;
   let isClosed = false;

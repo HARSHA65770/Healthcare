@@ -151,15 +151,44 @@ def seed_initial_demo_data():
         db.close()
 
 
-@app.get("/")
-def root():
-    return {
-        "platform": "Autonomous Rural Preventive Healthcare Web Platform",
-        "specification": "Client-Side Web PWA, Browser WASM-OCR, Vernacular Voice AI & Hospital Telemetry",
-        "status": "operational",
-        "docs": "/docs",
-        "version": "1.0.0"
-    }
+from fastapi.responses import FileResponse
+
+# Check if production frontend build exists to serve unified PWA
+frontend_dist = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend", "dist")
+
+if os.path.exists(frontend_dist):
+    assets_dir = os.path.join(frontend_dist, "assets")
+    if os.path.exists(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        if full_path.startswith("api/") or full_path.startswith("api"):
+            from fastapi import HTTPException
+            raise HTTPException(status_code=404, detail="API endpoint not found")
+        # Serve exact file if it exists (e.g. favicon.svg, manifest.json, sw.js)
+        file_path = os.path.join(frontend_dist, full_path)
+        if full_path and os.path.exists(file_path) and os.path.isfile(file_path):
+            return FileResponse(file_path)
+        # Fallback to SPA index.html
+        index_path = os.path.join(frontend_dist, "index.html")
+        if os.path.exists(index_path):
+            return FileResponse(index_path)
+        return {
+            "platform": "Autonomous Rural Preventive Healthcare Web Platform",
+            "status": "operational",
+            "docs": "/docs"
+        }
+else:
+    @app.get("/")
+    def root():
+        return {
+            "platform": "Autonomous Rural Preventive Healthcare Web Platform",
+            "specification": "Client-Side Web PWA, Browser WASM-OCR, Vernacular Voice AI & Hospital Telemetry",
+            "status": "operational",
+            "docs": "/docs",
+            "version": "1.0.0"
+        }
 
 
 @app.websocket("/ws/telemetry")
