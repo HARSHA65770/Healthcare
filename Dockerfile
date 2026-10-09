@@ -30,14 +30,11 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
-# Non-root security user
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+# Ensure data directory and /tmp are writable by any container runner user
+RUN mkdir -p /app/data && chmod -R 777 /app && chmod 777 /tmp
 
 # Copy built executable JAR from Stage 2
 COPY --from=backend-builder /app/backend/target/*.jar app.jar
-
-RUN chown -R appuser:appgroup /app
-USER appuser
 
 ENV PORT=8000
 EXPOSE 8000
