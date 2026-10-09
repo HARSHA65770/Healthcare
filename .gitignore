@@ -31,9 +31,17 @@ htmlcov/
 *.log
 
 # Editor and OS files
-.vscode/
 .idea/
 *.swp
 *.swo
 .DS_Store
 Thumbs.db
+
+# Java & Maven
+target/
+backend-java/target/
+*.class
+*.jar
+*.mv.db
+*.trace.db
+

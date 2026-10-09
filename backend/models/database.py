@@ -5,6 +5,8 @@ from sqlalchemy import create_engine, Column, String, Integer, DateTime, Text, B
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./rural_health.db")
+if os.getenv("VERCEL") and DATABASE_URL.startswith("sqlite:///."):
+    DATABASE_URL = "sqlite:////tmp/rural_health.db"
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 

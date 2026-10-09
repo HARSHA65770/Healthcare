@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "1. Start Java Backend (Spring Boot + SQL)",
+      "type": "shell",
+      "command": "cd backend-java; $env:MAVEN_OPTS='-Djavax.net.ssl.trustStoreType=WINDOWS-ROOT'; mvn spring-boot:run -Dmaven.test.skip=true",
+      "problemMatcher": [],
+      "presentation": {
+        "group": "backend",
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "2. Start React Frontend",
+      "type": "shell",
+      "command": "cd frontend; npm run dev",
+      "problemMatcher": [],
+      "presentation": {
+        "group": "frontend",
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "3. Start Both (Full-Stack)",
+      "dependsOn": [
+        "1. Start Java Backend (Spring Boot + SQL)",
+        "2. Start React Frontend"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, UserPlus, CheckCircle2, Shield, HeartPulse } from 'lucide-react';
 import { SUPPORTED_LANGUAGES } from '../services/vernacularVoice';
+import { registerPatientApi } from '../services/api';
 
 export interface PatientProfile {
   id: string;
@@ -105,16 +106,12 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
 
       // Attempt online backend sync if available
       try {
-        await fetch('/api/v1/auth/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            full_name: newProfile.fullName,
-            phone_number: newProfile.phoneNumber,
-            village_code: newProfile.village,
-            preferred_lang: newProfile.preferredLang,
-            role: 'Patient'
-          })
+        await registerPatientApi({
+          full_name: newProfile.fullName,
+          phone_number: newProfile.phoneNumber,
+          village_code: newProfile.village,
+          preferred_lang: newProfile.preferredLang,
+          role: 'Patient'
         });
       } catch (err) {
         console.log('[Registration] Offline local fallback activated');
