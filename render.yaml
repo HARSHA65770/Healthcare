@@ -1,14 +1,10 @@
 services:
-  # Unified Web Service: Serves React PWA Frontend + FastAPI REST APIs + WebSockets
+  # Unified Web Service: Serves React PWA Frontend + Java Spring Boot REST APIs + WebSockets + SQL
   - type: web
     name: healthcare-platform
-    runtime: python
+    runtime: docker
     region: oregon
     plan: free
-    buildCommand: "./render-build.sh"
-    startCommand: "uvicorn backend.main:app --host 0.0.0.0 --port $PORT"
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.9
-      - key: DATABASE_URL
-        value: sqlite:///./rural_health.db
+      - key: PORT
+        value: 8000

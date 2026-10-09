@@ -1,63 +1,48 @@
-# 🚀 Deploying to Render
+# 🚀 Deploying to Render (Java Spring Boot + React + SQL)
 
-This repository is configured for seamless deployment on **[Render](https://render.com/)**.
+This repository is configured for seamless deployment on **[Render](https://render.com/)** using Docker.
 
-You can deploy the application using either **Option A (Automated 1-Click Blueprint - Recommended)** or **Option B (Manual Web Service)**.
+Render builds both the **React Frontend** and the **Java Spring Boot 3 Backend** into a unified, self-contained container running on port `$PORT`.
 
 ---
 
 ## ⚡ Option A: Automated 1-Click Blueprint (Recommended)
 
-Render Blueprints use the [`render.yaml`](file:///c:/Users/aareh/OneDrive/Desktop/HealthCare/render.yaml) file in this repository to automatically configure the build command, start command, and environment settings.
+Render Blueprints use the [`render.yaml`](./render.yaml) file in this repository to automatically configure the service.
 
 ### Step 1: Push Changes to GitHub
-Make sure your latest code is pushed to your GitHub repository:
+Make sure your latest code is pushed:
 ```bash
 git add .
-git commit -m "Configure Render deployment"
+git commit -m "Configure Render Docker deployment for Java and React"
 git push origin main
 ```
 
 ### Step 2: Connect to Render
 1. Go to **[dashboard.render.com](https://dashboard.render.com/)** and log in.
 2. Click **New +** in the top navigation bar and select **Blueprint**.
-3. Connect your GitHub account and select your repository: **`HARSHA65770/Healthcare`**.
+3. Select your repository: **`HARSHA65770/Healthcare`**.
 4. Render will detect `render.yaml` automatically.
-5. Click **Apply**. Render will start building and deploying your application immediately!
+5. Click **Apply**. Render will build the multi-stage Docker image and deploy your service!
 
 ---
 
 ## 🛠️ Option B: Manual Web Service Setup
 
-If you prefer to configure the service manually via the Render UI:
+If you prefer setting it up manually in the Render dashboard:
 
-1. In Render Dashboard, click **New +** -> **Web Service**.
-2. Select your repository: **`HARSHA65770/Healthcare`**.
+1. In Render Dashboard, click **New +** &rarr; **Web Service**.
+2. Connect your repository: **`HARSHA65770/Healthcare`**.
 3. Fill in the following settings:
-   - **Name**: `healthcare-platform` (or your preferred name)
-   - **Region**: Choose the closest region (e.g., `Oregon`, `Frankfurt`, `Singapore`)
+   - **Name**: `healthcare-platform` (or your chosen name)
+   - **Region**: Choose closest region (e.g. `Oregon`, `Frankfurt`, `Singapore`)
    - **Branch**: `main`
    - **Root Directory**: *(leave blank)*
-   - **Runtime**: `Python 3`
-   - **Build Command**: `./render-build.sh`  
-     *(Or manually: `cd frontend && npm install && npm run build && cd .. && pip install -r backend/requirements.txt`)*
-   - **Start Command**: `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
+   - **Runtime**: **`Docker`**
    - **Plan Type**: `Free`
-4. Under **Environment Variables**, add:
-   - `PYTHON_VERSION`: `3.11.9`
-   - `DATABASE_URL`: `sqlite:///./rural_health.db`
-5. Click **Create Web Service**.
+4. Click **Create Web Service**.
 
----
-
-## 🐳 Option C: Deploy Using Docker
-
-This repository also includes a production multi-stage [`Dockerfile`](file:///c:/Users/aareh/OneDrive/Desktop/HealthCare/Dockerfile).
-
-1. In Render Dashboard, click **New +** -> **Web Service**.
-2. Select your repository.
-3. Set **Runtime** to **`Docker`**.
-4. Render will automatically build the image using the `Dockerfile` and launch the container on `$PORT`.
+Render will automatically build using the [`Dockerfile`](./Dockerfile) and start your application.
 
 ---
 
@@ -65,22 +50,28 @@ This repository also includes a production multi-stage [`Dockerfile`](file:///c:
 
 Once Render finishes deploying (marked with a green **Live** badge):
 
-1. **Web PWA & Doctor Dashboard**: Open the public URL provided by Render:
+1. **Web App (React PWA & Telemetry Portal)**:
+   ```text
+   https://<your-service-name>.onrender.com/
    ```
-   https://<your-service-name>.onrender.com
+2. **REST APIs**:
+   ```text
+   https://<your-service-name>.onrender.com/api/v1/hospitals/
    ```
-2. **Interactive Swagger API Docs**:
-   ```
-   https://<your-service-name>.onrender.com/docs
-   ```
-3. **Live Telemetry WebSocket Feed**:
-   ```
+3. **Live Doctor Telemetry WebSocket**:
+   ```text
    wss://<your-service-name>.onrender.com/ws/telemetry?district=ALL
    ```
 
 ---
 
-## 💡 Notes & Best Practices
+## 💡 Persistent Database (Optional)
 
-- **Free Tier Sleep Behavior**: Render's free tier services spin down after 15 minutes of inactivity. When a new request arrives, it may take 30-50 seconds to wake up (cold start).
-- **Persistent Database**: By default, SQLite stores data in `./rural_health.db`. On Render's free tier, local disk files reset between redeploys. If you want permanent persistence across restarts, create a free **PostgreSQL Database** on Render, copy its **Internal Database URL**, and set it as the `DATABASE_URL` environment variable in your Web Service settings. The application automatically adapts to PostgreSQL without code modifications.
+By default, the embedded SQL database persists locally. If you want permanent multi-region storage across all redeployments:
+1. In Render Dashboard, click **New +** &rarr; **PostgreSQL**.
+2. Copy the **Internal Database URL** provided by Render.
+3. In your Web Service settings, add the environment variable:
+   - `SPRING_DATASOURCE_URL`: `jdbc:postgresql://<render-db-host>:5432/<db-name>`
+   - `SPRING_DATASOURCE_USERNAME`: `<db-user>`
+   - `SPRING_DATASOURCE_PASSWORD`: `<db-password>`
+Hibernate JPA will automatically connect and manage the schema!
