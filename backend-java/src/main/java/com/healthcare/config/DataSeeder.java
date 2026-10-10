@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -34,8 +35,10 @@ public class DataSeeder implements CommandLineRunner {
     public void run(String... args) {
         // 1. Seed hospitals
         if (hospitalRepository.count() == 0) {
-            log.info("Seeding initial rural demonstration hospitals into SQL database...");
+            log.info("Seeding initial rural demonstration and regional hospitals into SQL database...");
+            List<HospitalRegistry> list = new ArrayList<>();
 
+            // RIMS Adilabad
             HospitalRegistry rims = new HospitalRegistry(
                     "gov-rims-adilabad",
                     "Rajiv Gandhi Institute of Medical Sciences (RIMS) & District Hospital",
@@ -49,7 +52,9 @@ public class DataSeeder implements CommandLineRunner {
             rims.setFacilitiesJson("[\"24/7 Emergency Casualty & Trauma Care\", \"Intensive Care Unit (ICU)\", \"Free Blood Bank\", \"Jan Aushadhi Generic Pharmacy\"]");
             rims.setIsOpen24x7(true);
             rims.setAyushmanEmpaneled(true);
+            list.add(rims);
 
+            // PHC Mavala
             HospitalRegistry phc = new HospitalRegistry(
                     "gov-phc-rural",
                     "Adilabad Rural Primary Health Centre (Cluster 104 PHC)",
@@ -63,7 +68,9 @@ public class DataSeeder implements CommandLineRunner {
             phc.setFacilitiesJson("[\"Free NCD Screenings (BP & Diabetes)\", \"Routine Immunization\", \"First Aid & Dressing\", \"ASHA Coordination\"]");
             phc.setIsOpen24x7(false);
             phc.setAyushmanEmpaneled(true);
+            list.add(phc);
 
+            // Utnoor CHC
             HospitalRegistry utnoor = new HospitalRegistry(
                     "gov-chc-utnoor",
                     "Utnoor Community Health Centre (CHC & Tribal Specialty Centre)",
@@ -76,8 +83,99 @@ public class DataSeeder implements CommandLineRunner {
             utnoor.setFacilitiesJson("[\"24/7 Snakebite Antivenom Unit\", \"Maternal & Child Health Wing\", \"Oxygen Pipeline Beds\"]");
             utnoor.setIsOpen24x7(true);
             utnoor.setAyushmanEmpaneled(true);
+            list.add(utnoor);
 
-            hospitalRepository.saveAll(List.of(rims, phc, utnoor));
+            // Asifabad CHC
+            HospitalRegistry asifabad = new HospitalRegistry(
+                    "gov-chc-asifabad",
+                    "Asifabad Community Health Centre (CHC - Komaram Bheem)",
+                    "DIST-ASIFABAD-03",
+                    "+91-8733-255108",
+                    19.3630,
+                    79.2850
+            );
+            asifabad.setAddress("Civil Hospital Road, Asifabad - 504293");
+            asifabad.setFacilitiesJson("[\"24/7 Emergency Maternity Delivery\", \"Pediatric Unit\", \"Free Diagnostics\"]");
+            asifabad.setIsOpen24x7(true);
+            asifabad.setAyushmanEmpaneled(true);
+            list.add(asifabad);
+
+            // Osmania Hospital Hyderabad
+            HospitalRegistry osmania = new HospitalRegistry(
+                    "gov-osmania-hyd",
+                    "Osmania General Hospital & State Apex Emergency Care",
+                    "DIST-HYD-01",
+                    "+91-40-24600121",
+                    17.3753,
+                    78.4744
+            );
+            osmania.setAddress("Afzal Gunj, Hyderabad, Telangana - 500012");
+            osmania.setFacilitiesJson("[\"Level-1 State Trauma Centre\", \"Coronary & Neuro ICU\", \"Snakebite Toxicology Unit\"]");
+            osmania.setIsOpen24x7(true);
+            osmania.setAyushmanEmpaneled(true);
+            list.add(osmania);
+
+            // Gandhi Hospital Secunderabad
+            HospitalRegistry gandhi = new HospitalRegistry(
+                    "gov-gandhi-sec",
+                    "Gandhi Hospital & Medical College",
+                    "DIST-HYD-02",
+                    "+91-40-27505566",
+                    17.4244,
+                    78.5039
+            );
+            gandhi.setAddress("Musheerabad, Padmarao Nagar, Secunderabad, Telangana - 500003");
+            gandhi.setFacilitiesJson("[\"Emergency Resuscitation Unit\", \"Maternal ICU\", \"Cardiology & Nephrology\"]");
+            gandhi.setIsOpen24x7(true);
+            gandhi.setAyushmanEmpaneled(true);
+            list.add(gandhi);
+
+            // AIIMS New Delhi
+            HospitalRegistry aiims = new HospitalRegistry(
+                    "gov-aiims-del",
+                    "All India Institute of Medical Sciences (AIIMS) New Delhi",
+                    "DIST-DEL-01",
+                    "+91-11-26588500",
+                    28.5672,
+                    77.2100
+            );
+            aiims.setAddress("Sri Aurobindo Marg, Ansari Nagar, New Delhi - 110029");
+            aiims.setFacilitiesJson("[\"JPN Apex Trauma Centre\", \"Advanced Resuscitation\", \"Cardiology & Critical Care\"]");
+            aiims.setIsOpen24x7(true);
+            aiims.setAyushmanEmpaneled(true);
+            list.add(aiims);
+
+            // Victoria Hospital Bengaluru
+            HospitalRegistry victoria = new HospitalRegistry(
+                    "gov-victoria-blr",
+                    "Victoria Hospital & Bangalore Medical College",
+                    "DIST-BLR-01",
+                    "+91-80-26701150",
+                    12.9647,
+                    77.5756
+            );
+            victoria.setAddress("Fort Road, Kalasipalya, Bengaluru, Karnataka - 560002");
+            victoria.setFacilitiesJson("[\"State Trauma Care Centre\", \"Burns Center\", \"Coronary Care Unit\"]");
+            victoria.setIsOpen24x7(true);
+            victoria.setAyushmanEmpaneled(true);
+            list.add(victoria);
+
+            // KEM Hospital Mumbai
+            HospitalRegistry kem = new HospitalRegistry(
+                    "gov-kem-mum",
+                    "King Edward Memorial (KEM) Hospital Mumbai",
+                    "DIST-MUM-01",
+                    "+91-22-24107000",
+                    19.0028,
+                    72.8427
+            );
+            kem.setAddress("Acharya Donde Marg, Parel, Mumbai, Maharashtra - 400012");
+            kem.setFacilitiesJson("[\"24/7 Trauma Resuscitation\", \"Cardiac Cath Lab\", \"Maternal ICU\"]");
+            kem.setIsOpen24x7(true);
+            kem.setAyushmanEmpaneled(true);
+            list.add(kem);
+
+            hospitalRepository.saveAll(list);
             log.info("Successfully seeded {} demonstration hospitals into SQL.", hospitalRepository.count());
         }
 

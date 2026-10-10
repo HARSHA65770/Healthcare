@@ -15,15 +15,24 @@ public class HospitalService {
     private final HospitalRepository hospitalRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    // Rural coordinates presets
-    private static final Map<String, double[]> VILLAGE_COORDS = Map.of(
-            "Adilabad Rural (Cluster 104)", new double[]{19.6641, 78.5320},
-            "Asifabad Sector 2 (Komaram Bheem)", new double[]{19.3600, 79.2800},
-            "Utnoor Tribal Cluster (ITDA)", new double[]{19.3667, 78.7833},
-            "Nirmal Town Mandal", new double[]{19.0964, 78.3434},
-            "Bela Border Hamlet", new double[]{19.7800, 78.8000},
-            "Hyderabad / Secunderabad", new double[]{17.3850, 78.4867}
-    );
+    // Regional coordinates presets
+    private static final Map<String, double[]> VILLAGE_COORDS = new LinkedHashMap<>();
+    static {
+        VILLAGE_COORDS.put("Adilabad Rural (Cluster 104)", new double[]{19.6641, 78.5320});
+        VILLAGE_COORDS.put("Asifabad Sector 2 (Komaram Bheem)", new double[]{19.3600, 79.2800});
+        VILLAGE_COORDS.put("Utnoor Tribal Cluster (ITDA)", new double[]{19.3667, 78.7833});
+        VILLAGE_COORDS.put("Nirmal Town Mandal", new double[]{19.0964, 78.3434});
+        VILLAGE_COORDS.put("Bela Border Hamlet", new double[]{19.7800, 78.8000});
+        VILLAGE_COORDS.put("Hyderabad / Secunderabad", new double[]{17.3850, 78.4867});
+        VILLAGE_COORDS.put("Warangal / Hanamkonda", new double[]{17.9784, 79.5941});
+        VILLAGE_COORDS.put("Bengaluru (Koramangala/City)", new double[]{12.9716, 77.5946});
+        VILLAGE_COORDS.put("Chennai (Central/George Town)", new double[]{13.0827, 80.2707});
+        VILLAGE_COORDS.put("Mumbai (South/Central)", new double[]{18.9950, 72.8400});
+        VILLAGE_COORDS.put("New Delhi (AIIMS / Connaught Place)", new double[]{28.6139, 77.2090});
+        VILLAGE_COORDS.put("Kolkata (Park Street/Howrah)", new double[]{22.5726, 88.3639});
+        VILLAGE_COORDS.put("Visakhapatnam (KGH / Beach Road)", new double[]{17.7042, 83.3032});
+        VILLAGE_COORDS.put("Vijayawada (Benz Circle / City)", new double[]{16.5062, 80.6480});
+    }
 
     public HospitalService(HospitalRepository hospitalRepository) {
         this.hospitalRepository = hospitalRepository;
@@ -71,7 +80,7 @@ public class HospitalService {
             userLat = 19.6641;
             userLng = 78.5320;
             source = "default_fallback";
-            locName = "Adilabad Rural (Cluster 104)";
+            locName = village != null ? village : "Adilabad Rural (Cluster 104)";
         }
 
         List<HospitalRegistry> all = hospitalRepository.findAll();
@@ -92,10 +101,10 @@ public class HospitalService {
             item.setEstimatedTimeMins(mins);
             item.setEmergencyPhone(h.getEmergencyPhone());
             item.setGeneralPhone(h.getGeneralPhone());
-            item.setAmbulancePhone(h.getAmbulancePhone());
-            item.setIsOpen24x7(h.getIsOpen24x7());
+            item.setAmbulancePhone(h.getAmbulancePhone() != null ? h.getAmbulancePhone() : "108");
+            item.setIsOpen24x7(h.getIsOpen24x7() != null ? h.getIsOpen24x7() : true);
             item.setOpdTimings(h.getOpdTimings());
-            item.setAyushmanEmpaneled(h.getAyushmanEmpaneled());
+            item.setAyushmanEmpaneled(h.getAyushmanEmpaneled() != null ? h.getAyushmanEmpaneled() : true);
             item.setGoogleMapsUrl("https://www.google.com/maps/dir/?api=1&destination=" + h.getLatitude() + "," + h.getLongitude());
 
             List<String> facilities = new ArrayList<>();
@@ -109,7 +118,7 @@ public class HospitalService {
             Map<String, String> contact = new HashMap<>();
             contact.put("emergency", "Call " + h.getEmergencyPhone() + " or dial 108");
             contact.put("opdAppointment", "Walk-in consultation available during OPD hours");
-            contact.put("ambulanceSupport", "108 ambulance dispatch available directly to village");
+            contact.put("ambulanceSupport", "108 ambulance dispatch available directly to location");
             item.setHowToContact(contact);
 
             items.add(item);

@@ -14,7 +14,15 @@ export const VILLAGE_COORDINATES: Record<string, { lat: number; lng: number; nam
   'Utnoor Tribal Cluster (ITDA)': { lat: 19.3667, lng: 78.7833, name: 'Utnoor Tribal Cluster (ITDA)' },
   'Nirmal Town Mandal': { lat: 19.0964, lng: 78.3434, name: 'Nirmal Town Mandal' },
   'Bela Border Hamlet': { lat: 19.78, lng: 78.8, name: 'Bela Border Hamlet' },
-  'Hyderabad / Secunderabad': { lat: 17.385, lng: 78.4867, name: 'Hyderabad City Center' }
+  'Hyderabad / Secunderabad': { lat: 17.385, lng: 78.4867, name: 'Hyderabad City Center' },
+  'Warangal / Hanamkonda': { lat: 17.9784, lng: 79.5941, name: 'Warangal / Hanamkonda' },
+  'Bengaluru (Koramangala/City)': { lat: 12.9716, lng: 77.5946, name: 'Bengaluru City' },
+  'Chennai (Central/George Town)': { lat: 13.0827, lng: 80.2707, name: 'Chennai City' },
+  'Mumbai (South/Central)': { lat: 18.995, lng: 72.84, name: 'Mumbai City' },
+  'New Delhi (AIIMS / Connaught Place)': { lat: 28.6139, lng: 77.209, name: 'New Delhi' },
+  'Kolkata (Park Street/Howrah)': { lat: 22.5726, lng: 88.3639, name: 'Kolkata' },
+  'Visakhapatnam (KGH / Beach Road)': { lat: 17.7042, lng: 83.3032, name: 'Visakhapatnam' },
+  'Vijayawada (Benz Circle / City)': { lat: 16.5062, lng: 80.648, name: 'Vijayawada' }
 };
 
 export const OFFLINE_MASTER_HOSPITALS: Array<{
@@ -38,10 +46,11 @@ export const OFFLINE_MASTER_HOSPITALS: Array<{
     ambulanceSupport?: string;
   };
 }> = [
+  // TELANGANA - ADILABAD & SURROUNDING
   {
     id: 'gov-rims-adilabad',
     name: 'Rajiv Gandhi Institute of Medical Sciences (RIMS) & District Hospital',
-    hospital_type: 'Medical College & District Hospital',
+    hospital_type: 'Medical College & District Apex Hospital',
     district_code: 'DIST-ADILABAD-01',
     address: 'National Highway 44, Collectorate Road, Adilabad, Telangana - 504001',
     latitude: 19.6641,
@@ -175,6 +184,8 @@ export const OFFLINE_MASTER_HOSPITALS: Array<{
       ambulanceSupport: '108 Ambulance service available 24 hours.'
     }
   },
+
+  // HYDERABAD & WARANGAL (TELANGANA)
   {
     id: 'gov-osmania-hyd',
     name: 'Osmania General Hospital & State Apex Emergency Care',
@@ -226,6 +237,304 @@ export const OFFLINE_MASTER_HOSPITALS: Array<{
       opdAppointment: 'Free general OPD counters open Monday through Saturday.',
       ambulanceSupport: 'Dial 108 for emergency transit.'
     }
+  },
+  {
+    id: 'gov-nims-hyd',
+    name: "Nizam's Institute of Medical Sciences (NIMS)",
+    hospital_type: 'Super Specialty Autonomous Apex Institute',
+    district_code: 'DIST-HYD-03',
+    address: 'Punjagutta, Hyderabad, Telangana - 500082',
+    latitude: 17.4223,
+    longitude: 78.4528,
+    emergency_phone: '+91-40-23489000',
+    general_phone: '+91-40-23489244',
+    ambulance_phone: '108',
+    is_open_24x7: true,
+    opd_timings: '24/7 Emergency Trauma & Critical Care Unit',
+    facilities: [
+      'Comprehensive Cardiac Cath Labs & Emergency Bypass',
+      'Advanced Neuro-Trauma & Stroke Intervention',
+      'Organ Transplant & Dialysis Super Center',
+      'Ayushman Bharat & Aarogyasri Trust Empaneled'
+    ],
+    ayushman_empaneled: true,
+    how_to_contact: {
+      emergency: 'Call +91-40-23489000. Emergency Trauma Ward Gate 2.',
+      opdAppointment: 'Online and on-spot OPD counter from 8:00 AM.',
+      ambulanceSupport: 'Dial 108 for emergency transport.'
+    }
+  },
+  {
+    id: 'gov-mgm-warangal',
+    name: 'Mahatma Gandhi Memorial (MGM) Hospital & Kakatiya Medical College',
+    hospital_type: 'District Referral & Teaching Hospital',
+    district_code: 'DIST-WARANGAL-01',
+    address: 'Station Road, Mattewada, Warangal, Telangana - 506007',
+    latitude: 17.9784,
+    longitude: 79.5941,
+    emergency_phone: '+91-870-2441108',
+    general_phone: '+91-870-2441100',
+    ambulance_phone: '108',
+    is_open_24x7: true,
+    opd_timings: '24/7 Casualty & Multi-Specialty Services',
+    facilities: [
+      'Comprehensive Emergency & Trauma Care Unit',
+      'Snakebite Antivenom & Toxicology Emergency Ward',
+      'Pediatric Intensive Care Unit (PICU)',
+      'Aarogyasri Free Medical Services'
+    ],
+    ayushman_empaneled: true,
+    how_to_contact: {
+      emergency: 'Call +91-870-2441108 or 108. Direct Casualty Gate.',
+      opdAppointment: 'OPD registration open from 8:30 AM.',
+      ambulanceSupport: 'Dial 108 ambulance dispatch.'
+    }
+  },
+
+  // ANDHRA PRADESH
+  {
+    id: 'gov-kgh-vizag',
+    name: 'King George Hospital (KGH) & Andhra Medical College',
+    hospital_type: 'State Apex Teaching & Super Specialty Hospital',
+    district_code: 'DIST-VIZAG-01',
+    address: 'Collectorate Junction, Maharanipeta, Visakhapatnam, AP - 530002',
+    latitude: 17.7042,
+    longitude: 83.3032,
+    emergency_phone: '+91-891-2564891',
+    general_phone: '+91-891-2564893',
+    ambulance_phone: '108',
+    is_open_24x7: true,
+    opd_timings: '24/7 Emergency Casualty & All Specializations',
+    facilities: [
+      'Level-1 Regional Trauma Centre',
+      'Advanced Cardiology & Cardiothoracic Surgery',
+      'Pediatric & Neonatal Intensive Care (NICU)',
+      'Free Aarogyasri / Ayushman Bharat Services'
+    ],
+    ayushman_empaneled: true,
+    how_to_contact: {
+      emergency: 'Call +91-891-2564891 or 108. Casualty building entry.',
+      opdAppointment: 'OP registration counters start 8:00 AM daily.',
+      ambulanceSupport: 'Dial 108 emergency service.'
+    }
+  },
+  {
+    id: 'gov-ggh-vja',
+    name: 'Government General Hospital (GGH) Vijayawada',
+    hospital_type: 'Apex Teaching Hospital',
+    district_code: 'DIST-KRS-01',
+    address: 'MG Road, Hanumanpet, Vijayawada, AP - 520002',
+    latitude: 16.5062,
+    longitude: 80.648,
+    emergency_phone: '+91-866-2578108',
+    general_phone: '+91-866-2578100',
+    ambulance_phone: '108',
+    is_open_24x7: true,
+    opd_timings: '24/7 Emergency Casualty',
+    facilities: [
+      '24/7 Emergency Resuscitation & Trauma Ward',
+      'Burn Care Unit & Snakebite ICU',
+      'Dialysis & Blood Bank Services',
+      'Aarogyasri PM-JAY Empaneled'
+    ],
+    ayushman_empaneled: true,
+    how_to_contact: {
+      emergency: 'Call +91-866-2578108 or 108.',
+      opdAppointment: 'Daily free OPD from 8:30 AM.',
+      ambulanceSupport: 'Dial 108 for transport.'
+    }
+  },
+
+  // BENGALURU (KARNATAKA)
+  {
+    id: 'gov-victoria-blr',
+    name: 'Victoria Hospital & Bangalore Medical College (BMCRI)',
+    hospital_type: 'Apex Government Medical College & Emergency Hospital',
+    district_code: 'DIST-BLR-01',
+    address: 'Fort Road, Near City Market, Kalasipalya, Bengaluru, Karnataka - 560002',
+    latitude: 12.9647,
+    longitude: 77.5756,
+    emergency_phone: '+91-80-26701150',
+    general_phone: '+91-80-26701151',
+    ambulance_phone: '108',
+    is_open_24x7: true,
+    opd_timings: '24/7 Emergency Trauma & Burns Unit',
+    facilities: [
+      'State Trauma Care Centre (Level 1)',
+      'Apex Burns Center & Toxicology Ward',
+      'Coronary Care Unit & Neuro ICU',
+      'Ayushman Bharat Arogya Karnataka Covered'
+    ],
+    ayushman_empaneled: true,
+    how_to_contact: {
+      emergency: 'Call +91-80-26701150 or 108. Direct ramp to Trauma Block.',
+      opdAppointment: 'General OPD open 9:00 AM to 1:00 PM.',
+      ambulanceSupport: 'Dial 108 emergency ambulance.'
+    }
+  },
+  {
+    id: 'gov-bowring-blr',
+    name: 'Bowring & Lady Curzon Hospital',
+    hospital_type: 'Government Teaching Hospital',
+    district_code: 'DIST-BLR-02',
+    address: 'Lady Curzon Road, Tasker Town, Shivajinagar, Bengaluru, Karnataka - 560001',
+    latitude: 12.9822,
+    longitude: 77.6045,
+    emergency_phone: '+91-80-25591362',
+    general_phone: '+91-80-25591325',
+    ambulance_phone: '108',
+    is_open_24x7: true,
+    opd_timings: '24/7 Casualty & OPD',
+    facilities: [
+      'Emergency Resuscitation & ICU',
+      'Maternity, NICU & Pediatric Emergency',
+      'Dialysis Unit & Central Pharmacy',
+      'PM-JAY Scheme Covered'
+    ],
+    ayushman_empaneled: true,
+    how_to_contact: {
+      emergency: 'Call +91-80-25591362 or dial 108.',
+      opdAppointment: 'Walk-in registration from 8:30 AM.',
+      ambulanceSupport: 'Dial 108.'
+    }
+  },
+
+  // CHENNAI (TAMIL NADU)
+  {
+    id: 'gov-rgggh-chn',
+    name: 'Rajiv Gandhi Government General Hospital (Madras Medical College)',
+    hospital_type: 'State Apex Multi-Specialty & Teaching Hospital',
+    district_code: 'DIST-CHN-01',
+    address: 'EVR Periyar Salai, Park Town, Chennai, Tamil Nadu - 600003',
+    latitude: 13.0805,
+    longitude: 80.2783,
+    emergency_phone: '+91-44-25305000',
+    general_phone: '+91-44-25305115',
+    ambulance_phone: '108',
+    is_open_24x7: true,
+    opd_timings: '24/7 Emergency Casualty & All Super Specialties',
+    facilities: [
+      'Level-1 Emergency Trauma Care & ICU',
+      'Zero-Delay Cardiac Intervention Centre',
+      'Comprehensive Stroke Management Centre',
+      'Chief Minister Comprehensive Health Insurance & PM-JAY'
+    ],
+    ayushman_empaneled: true,
+    how_to_contact: {
+      emergency: 'Call +91-44-25305000 or dial 108. Trauma ward gate.',
+      opdAppointment: 'OP counters open at 7:30 AM daily.',
+      ambulanceSupport: 'Dial 108 free emergency dispatch.'
+    }
+  },
+
+  // MUMBAI (MAHARASHTRA)
+  {
+    id: 'gov-kem-mum',
+    name: 'King Edward Memorial (KEM) Hospital & Seth GS Medical College',
+    hospital_type: 'Apex Municipal Teaching & Super Specialty Hospital',
+    district_code: 'DIST-MUM-01',
+    address: 'Acharya Donde Marg, Parel, Mumbai, Maharashtra - 400012',
+    latitude: 19.0028,
+    longitude: 72.8427,
+    emergency_phone: '+91-22-24107000',
+    general_phone: '+91-22-24136051',
+    ambulance_phone: '108',
+    is_open_24x7: true,
+    opd_timings: '24/7 Emergency Casualty & Multi-Specialty Care',
+    facilities: [
+      'Comprehensive 24/7 Trauma Resuscitation Unit',
+      'Advanced Cardiac Cath Lab & Stroke Unit',
+      'Maternal & Neonatal Intensive Care (NICU)',
+      'Mahatma Jyotirao Phule Jan Arogya & PM-JAY Empaneled'
+    ],
+    ayushman_empaneled: true,
+    how_to_contact: {
+      emergency: 'Call +91-22-24107000 or 108. Casualty ground floor.',
+      opdAppointment: 'General OPD registration open 8:00 AM to 12:30 PM.',
+      ambulanceSupport: 'Dial 108 emergency ambulance.'
+    }
+  },
+
+  // NEW DELHI
+  {
+    id: 'gov-aiims-del',
+    name: 'All India Institute of Medical Sciences (AIIMS) New Delhi',
+    hospital_type: 'National Apex Medical & Emergency Resuscitation Center',
+    district_code: 'DIST-DEL-01',
+    address: 'Sri Aurobindo Marg, Ansari Nagar, New Delhi - 110029',
+    latitude: 28.5672,
+    longitude: 77.21,
+    emergency_phone: '+91-11-26588500',
+    general_phone: '+91-11-26588700',
+    ambulance_phone: '108',
+    is_open_24x7: true,
+    opd_timings: '24/7 Jai Prakash Narayan Apex Trauma Centre & Casualty',
+    facilities: [
+      'JPN Apex Trauma Centre (Level-1 National Emergency)',
+      'Advanced Resuscitation & Emergency Medicine Dept',
+      'Cardiology, Neurology, Toxicology & Critical Care',
+      'Ayushman Bharat (PM-JAY) National Referral Hospital'
+    ],
+    ayushman_empaneled: true,
+    how_to_contact: {
+      emergency: 'Call +91-11-26588500 or 108. Direct ambulance bay at Emergency Gate.',
+      opdAppointment: 'Online registration or walk-in counter from 7:30 AM.',
+      ambulanceSupport: 'Dial 108 / 102 for emergency response.'
+    }
+  },
+  {
+    id: 'gov-safdarjung-del',
+    name: 'Safdarjung Hospital & VMMC Emergency Care',
+    hospital_type: 'Central Government Super Specialty Hospital',
+    district_code: 'DIST-DEL-02',
+    address: 'Ring Road, Opposite AIIMS, New Delhi - 110029',
+    latitude: 28.5705,
+    longitude: 77.2072,
+    emergency_phone: '+91-11-26707444',
+    general_phone: '+91-11-26165060',
+    ambulance_phone: '108',
+    is_open_24x7: true,
+    opd_timings: '24/7 Super Specialty Emergency Block',
+    facilities: [
+      'State-of-the-Art Emergency & Trauma Center (500 beds)',
+      'Dedicated National Burns & Plastic Surgery Centre',
+      'Heart Command Center & Dialysis Units',
+      'Free Treatment under Central Health Schemes'
+    ],
+    ayushman_empaneled: true,
+    how_to_contact: {
+      emergency: 'Call +91-11-26707444 or 108. Emergency Block Gate No. 2.',
+      opdAppointment: 'OPD registration 8:00 AM to 11:30 AM.',
+      ambulanceSupport: 'Dial 108 for emergency transit.'
+    }
+  },
+
+  // KOLKATA (WEST BENGAL)
+  {
+    id: 'gov-sskm-kol',
+    name: 'SSKM Hospital (IPGMER) Kolkata',
+    hospital_type: 'State Apex Post Graduate Medical Institute',
+    district_code: 'DIST-KOL-01',
+    address: '244 AJC Bose Road, Bhowanipore, Kolkata, West Bengal - 700020',
+    latitude: 22.5392,
+    longitude: 88.3435,
+    emergency_phone: '+91-33-22231589',
+    general_phone: '+91-33-22041100',
+    ambulance_phone: '108',
+    is_open_24x7: true,
+    opd_timings: '24/7 Emergency Casualty & Trauma Care',
+    facilities: [
+      'Level-1 State Trauma Centre',
+      'Cardiology, Nephrology, & Critical Care',
+      'Toxicology & Poison Control Center',
+      'Free Government Emergency Treatment'
+    ],
+    ayushman_empaneled: true,
+    how_to_contact: {
+      emergency: 'Call +91-33-22231589 or 108. Casualty reception open 24 hours.',
+      opdAppointment: 'OPD registration open from 8:00 AM.',
+      ambulanceSupport: 'Dial 108.'
+    }
   }
 ];
 
@@ -249,9 +558,54 @@ export function estimateAmbulanceMins(distanceKm: number): number {
 }
 
 /**
+ * Reverse geocode latitude and longitude to get friendly human address/locality
+ */
+async function fetchReverseGeocode(lat: number, lng: number): Promise<string | null> {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2500);
+
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=14`,
+      {
+        headers: { Accept: 'application/json' },
+        signal: controller.signal
+      }
+    );
+    clearTimeout(timeoutId);
+
+    if (res.ok) {
+      const data = await res.json();
+      const addr = data.address;
+      if (addr) {
+        const place =
+          addr.suburb ||
+          addr.neighbourhood ||
+          addr.residential ||
+          addr.city_district ||
+          addr.village ||
+          addr.town;
+        const city = addr.city || addr.town || addr.county || addr.state_district || addr.state;
+        if (place && city && place !== city) {
+          return `${place}, ${city}`;
+        }
+        if (city) {
+          return `${city} (${addr.state || ''})`.trim();
+        }
+        return data.display_name?.split(',').slice(0, 2).join(',').trim() || null;
+      }
+    }
+  } catch (e) {
+    // Timeout or network offline
+  }
+  return null;
+}
+
+/**
  * Detects current user location:
- * 1. Attempts high-accuracy browser GPS (navigator.geolocation)
- * 2. If denied or timed out, falls back to patient's registered village coordinates
+ * 1. Prompts real-time high-accuracy browser GPS (navigator.geolocation)
+ * 2. Reverse-geocodes actual city/neighborhood name
+ * 3. Falls back to patient profile village preset if denied or unavailable
  */
 export async function detectCurrentLocation(fallbackVillage?: string): Promise<UserGeoLocation> {
   return new Promise((resolve) => {
@@ -261,25 +615,49 @@ export async function detectCurrentLocation(fallbackVillage?: string): Promise<U
     }
 
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
+      async (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        const accuracy = pos.coords.accuracy;
+
+        // Try reverse-geocoding for real locality
+        let resolvedName = await fetchReverseGeocode(lat, lng);
+
+        if (!resolvedName) {
+          // Check closest known regional anchor
+          let closestPresetName = '';
+          let minD = Infinity;
+          for (const [name, p] of Object.entries(VILLAGE_COORDINATES)) {
+            const d = calculateDistanceKm(lat, lng, p.lat, p.lng);
+            if (d < minD) {
+              minD = d;
+              closestPresetName = name;
+            }
+          }
+
+          if (minD < 30 && closestPresetName) {
+            resolvedName = `Near ${closestPresetName} (GPS)`;
+          } else {
+            resolvedName = `Live GPS (${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E)`;
+          }
+        }
+
         resolve({
-          latitude: pos.coords.latitude,
-          longitude: pos.coords.longitude,
-          accuracy: pos.coords.accuracy,
+          latitude: lat,
+          longitude: lng,
+          accuracy,
           source: 'gps',
-          locationName: fallbackVillage
-            ? `${fallbackVillage} (GPS Verified)`
-            : `Live GPS (${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)})`
+          locationName: resolvedName
         });
       },
       (err) => {
-        console.warn('[LocationService] Geolocation unavailable or denied, falling back to village preset:', err.message);
+        console.warn('[LocationService] Geolocation unavailable or denied, falling back:', err.message);
         resolve(getVillageFallback(fallbackVillage));
       },
       {
         enableHighAccuracy: true,
-        timeout: 6000,
-        maximumAge: 60000
+        timeout: 7000,
+        maximumAge: 30000
       }
     );
   });

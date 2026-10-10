@@ -33,6 +33,15 @@ public class VitalsIngestionRequest {
     @JsonProperty("district_code")
     private String districtCode = "ALL";
 
+    @JsonProperty("user_lat")
+    private Double userLat;
+
+    @JsonProperty("user_lng")
+    private Double userLng;
+
+    @JsonProperty("user_location_name")
+    private String userLocationName;
+
     // Getters and Setters
     public String getPatientId() { return patientId; }
     public void setPatientId(String patientId) { this.patientId = patientId; }
@@ -60,4 +69,13 @@ public class VitalsIngestionRequest {
 
     public String getDistrictCode() { return districtCode; }
     public void setDistrictCode(String districtCode) { this.districtCode = districtCode; }
+
+    public Double getUserLat() { return userLat; }
+    public void setUserLat(Double userLat) { this.userLat = userLat; }
+
+    public Double getUserLng() { return userLng; }
+    public void setUserLng(Double userLng) { this.userLng = userLng; }
+
+    public String getUserLocationName() { return userLocationName; }
+    public void setUserLocationName(String userLocationName) { this.userLocationName = userLocationName; }
 }

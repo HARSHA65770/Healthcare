@@ -62,76 +62,128 @@ export const SUPPORTED_LANGUAGES: LanguageOption[] = [
 ];
 
 export class VernacularVoiceEngine {
-  private recognition: any = null;
-
-  constructor() {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (SpeechRecognition) {
-      this.recognition = new SpeechRecognition();
-      this.recognition.continuous = false;
-      this.recognition.interimResults = false;
-    }
-  }
+  private activeRecognition: any = null;
 
   isSupported(): boolean {
-    return !!this.recognition;
+    return !!((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
   }
 
   startListening(
     langCode: string,
-    onResult: (text: string) => void,
-    onError: (err: any) => void
+    onResult: (text: string, isFinal: boolean) => void,
+    onError: (err: any) => void,
+    onEnd?: () => void
   ): () => void {
-    if (!this.recognition) {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
       onError(new Error('Speech recognition not supported in this browser.'));
       return () => {};
     }
 
-    this.recognition.lang = langCode;
+    // Safely stop any ongoing instance
+    try {
+      if (this.activeRecognition) {
+        this.activeRecognition.abort();
+      }
+    } catch (e) {}
 
-    this.recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
-      onResult(transcript);
+    const recognition = new SpeechRecognition();
+    this.activeRecognition = recognition;
+    recognition.lang = langCode;
+    recognition.continuous = false;
+    recognition.interimResults = true; // Stream live words so the UI never appears blank while speaking
+
+    recognition.onresult = (event: any) => {
+      let interimTranscript = '';
+      let finalTranscript = '';
+
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        const item = event.results[i];
+        if (item && item[0]) {
+          if (item.isFinal) {
+            finalTranscript += item[0].transcript;
+          } else {
+            interimTranscript += item[0].transcript;
+          }
+        }
+      }
+
+      if (finalTranscript.trim()) {
+        onResult(finalTranscript.trim(), true);
+      } else if (interimTranscript.trim()) {
+        onResult(interimTranscript.trim(), false);
+      }
     };
 
-    this.recognition.onerror = (event: any) => {
-      onError(event.error);
+    recognition.onerror = (event: any) => {
+      // Ignore normal no-speech timeouts gracefully
+      if (event.error !== 'no-speech' && event.error !== 'aborted') {
+        onError(event.error);
+      }
+    };
+
+    recognition.onend = () => {
+      if (this.activeRecognition === recognition) {
+        this.activeRecognition = null;
+      }
+      onEnd?.();
     };
 
     try {
-      this.recognition.start();
+      recognition.start();
     } catch (e) {
       console.warn('[Speech] Start error:', e);
+      onError(e);
     }
 
     return () => {
       try {
-        this.recognition.stop();
+        recognition.stop();
       } catch (e) {}
     };
   }
 
   speakGuidance(text: string, langCode: string) {
     if (!('speechSynthesis' in window)) return;
+    if (!text || typeof text !== 'string' || !text.trim()) return;
 
-    window.speechSynthesis.cancel(); // Cancel any existing speech
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = langCode;
-    utterance.rate = 0.9; // Slightly slower for clarity in rural environments
+    // Sanitize any corrupted chars from text
+    const cleanText = text.replace(/[\u0080-\u009F\uFFFD]/g, '').trim();
+    if (!cleanText) return;
 
-    // Attempt to pick a matching regional voice if available
-    const voices = window.speechSynthesis.getVoices();
-    const match = voices.find(v => v.lang.startsWith(langCode.slice(0, 2)));
-    if (match) {
-      utterance.voice = match;
+    try {
+      window.speechSynthesis.cancel(); // Cancel any existing speech
+    } catch (e) {}
+
+    try {
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utterance.lang = langCode;
+      utterance.rate = 0.9; // Slightly slower for clarity in rural environments
+
+      // Attempt to pick a matching regional voice if available
+      const voices = window.speechSynthesis.getVoices();
+      if (voices && voices.length > 0) {
+        const match = voices.find(v => v.lang && v.lang.toLowerCase().startsWith(langCode.slice(0, 2).toLowerCase()));
+        if (match) {
+          utterance.voice = match;
+        }
+      }
+
+      utterance.onerror = (e) => {
+        console.warn('[SpeechSynthesis] Utterance error:', e);
+      };
+
+      window.speechSynthesis.speak(utterance);
+    } catch (e) {
+      console.warn('[SpeechSynthesis] Failed to speak guidance:', e);
     }
-
-    window.speechSynthesis.speak(utterance);
   }
 
   stopSpeaking() {
     if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
+      try {
+        window.speechSynthesis.cancel();
+      } catch (e) {}
     }
   }
 }
