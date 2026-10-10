@@ -13,3 +13,6 @@ backend/*/__pycache__
 .vscode
 .idea
 .pytest_cache
+backend-java/target
+backend-java/data
+backend-java/.flattened-pom.xml

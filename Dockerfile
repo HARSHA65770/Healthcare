@@ -24,7 +24,7 @@ COPY backend-java/src ./src
 COPY --from=frontend-builder /app/frontend/dist ./src/main/resources/static
 
 # Package application into executable jar
-RUN mvn clean package -DskipTests
+RUN mvn clean package -Dmaven.test.skip=true
 
 # Stage 3: Lightweight Production JRE Runtime
 FROM eclipse-temurin:17-jre-alpine
